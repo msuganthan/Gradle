@@ -1,0 +1,8 @@
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.springframework:spring.core:4.2.5.RELEASE',
+			'org.hibernate:hibernate-core:3.6.7.Final'
+}

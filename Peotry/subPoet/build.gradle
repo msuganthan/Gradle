@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+task compile << {
+	println 'task compile'
+}
+
+task compileTest(dependsOn: compile) << {
+	println 'compile test'
+}
+
+task runningTest(dependsOn: compileTest) << {
+	println 'running test'
+}
+task dist(dependsOn:[runningTest, compileTest, compile]) << {
+	println 'running distribution job'
+}

@@ -1,0 +1,51 @@
+description = 'The shared API for the application'
+
+version = '1.0'
+jar {
+	manifest {
+		attributes 'Implementation-Title' : 'Gradle Quickstart',
+			'Implementation-Version':version
+	}
+}
+
+configurations {
+	provided//.extendsFrom(compile)
+}
+
+apply plugin: 'java'
+
+task sourceSetTest {
+	println 'sourceSets.main.compileClasspath =======> '+sourceSets.main.compileClasspath
+	sourceSets.main.compileClasspath += [configurations.provided]
+	println 'sourceSets.main.compileClasspath =======> '+sourceSets.main.compileClasspath
+}
+
+task compile << {
+	println 'task compile'
+}
+
+task compileTest(dependsOn: compile) << {
+	println 'compile test'
+}
+
+task runningTest(dependsOn: compileTest) << {
+	println 'running test'
+}
+task dist(dependsOn:[runningTest, compileTest, compile]) << {
+	println 'running distribution job'
+}
+dist {
+    description = 'Builds the distribution'
+    group = 'build'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.springframework:spring-core:4.0.5.RELEASE',
+			'org.hibernate:hibernate-core:3.6.7.Final'
+	
+	provided 'org.springframework:spring-context:4.0.5.RELEASE'
+}
